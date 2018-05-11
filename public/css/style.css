@@ -1,19 +1,24 @@
 body {
 /* style of the whole website*/
-	font-family: "Bubblegum Sans", sans-serif;
+	font-family: 'Swanky and Moo Moo';
+    font-weight: bold;
 	background-color: #89CFF0;
 	overflow-x: hidden;
 }
 /* classes */
 .texts {
 	text-align: center;
+    font-family: 'Swanky and Moo Moo';
+    font-size: 25px;
 	/*font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;*/
 }
 .added-ingredients {
 /* style of search history */
 	text-align: center;
-	font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-	margin:3%;
+	font-family: 'Swanky and Moo Moo';
+	font-size: 25px;
+	margin:1%;
+    height: 1vh;
 }
 .butts {
 	width: 100%;
@@ -156,11 +161,13 @@ body {
 .searchResultsLink {
     display: inline-block;
     width: 100%;
+    text-align: center;
+    font-size: 20px;
 }
 
 .searchResultsImgs {
-    width: auto;
-    height: 40%;
+    width: 100%;
+    height: auto;
     position: relative;
     left: 0;
 
@@ -170,10 +177,10 @@ body {
 #ctrlpanel {
 	position:fixed;
 	height:100%;
-    width: 50%;
+    width: 80%;
 	background-color: white;
 	top:0;
-    left: 0;
+    left: -80%;
 	box-shadow: 3px 0 3px #888888;
 	overflow-y: scroll;
 	overflow-x: hidden;
@@ -207,13 +214,12 @@ body {
     position: fixed;
     top: -2%;
     height: 12%;
-    left: 47.5%;
+    left: 0;
     transition: left 0.5s;
     cursor: pointer;
 }
 /*search ingredients div*/
 #search-ingredients-div {
-	/*background-color: red;*/
 	display:block;
 }
 #ingredient-bar {
@@ -223,17 +229,16 @@ body {
 	text-align: left;
 	font-size: 20px;
 	background-color: white;
-	padding:5%;
+	padding:2%;
 	position: relative;
-	margin: 5% 5% 5%;
+	margin: 2% 2% 2%;
 }
 #food-list {
 	position: relative;
 	/*background-color: blue;*/
 	height: 80%;
 	margin: 0% 3% 0% 3%;
-	overflow-y: scroll;
-	overflow-x: hidden;
+    text-align: center;
 }
 #cat-ingredients-div {
 	/*background-color: red;*/
@@ -243,7 +248,7 @@ body {
 /*actual page */
 #big-page-div {
 	background-color: #DCDCDC;
-	width:80%;
+    width: 100%;
 	height:88%;
 	right:-5px;
 	bottom:-3%;
@@ -276,7 +281,13 @@ body {
 }
 #welcome-msg {
 	font-size: 225%;
-    font-family: Impact;
+    font-family: "Swanky and Moo Moo";
+    font-weight: bold;
+}
+
+#welcome-user-msg {
+    font-family: "Swanky and Moo Moo";
+    font-weight: bold;
 }
 #food-search {
 	width: 25%;
@@ -307,7 +318,7 @@ body {
 	background-color: #777;
 	color: white;
 	cursor: pointer;
-	width: 100%;
+	width: 30%;
 	height: 2%;
 	border: none;
 	text-align: center;
@@ -396,4 +407,20 @@ a:visited {
     z-index: 10;
 }
 
-/*test */
+#delFavBtn {
+    
+}
+
+#searchlist {
+    text-align: center;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 20vh;
+}
+
+.allbuttons {
+    display: inline-block;
+    width: 33%;
+}
+

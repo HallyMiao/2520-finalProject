@@ -1,10 +1,10 @@
 // contents inside fridge
 var vegList = [], // object list
     vegListImport = []; // record of created objects for faster processing
-    /* ------------------- to be changed to blank when merged with hbs ----------------- */
-    // list of items saved from elsewhere; currently just a default list of items
-    vegListSaved = ["potato","carrot","tomato","bellPepper","garlic","eggplant","corn","cucumber","beef","chicken"];
-    emptySlot = []; // un-occupied slots after delete is used
+/* ------------------- to be changed to blank when merged with hbs ----------------- */
+// list of items saved from elsewhere; currently just a default list of items
+vegListSaved = ["potato", "carrot", "tomato", "bellPepper", "garlic", "eggplant", "corn", "cucumber", "beef", "chicken"];
+emptySlot = []; // un-occupied slots after delete is used
 
 /* ---------- fridge input box ------------- */
 var fridgeInput = document.getElementById("inputBox");
@@ -13,7 +13,7 @@ var fridgeInput = document.getElementById("inputBox");
 // fridge input box event listener
 fridgeInput.onkeyup = function (ev) {
     if (ev.keyCode == 13) {
-         // disallow blank entry
+        // disallow blank entry
         if (checkBlank(this.value)) {
             return;
         }
@@ -170,8 +170,7 @@ botClose.onclick = () => {
     changeDoor(1);
 };
 
-
-/** 
+/**
  * Auto generate objects for each fridge item and store in VegList
  * @param {list} list - list of names of fridge contents
  */
@@ -189,7 +188,7 @@ function populate(list) {
 
         // check if image file exist
         if (checkImg(list[i], item)) {
-            item.style.backgroundImage = "url(../imgs/" + list[i] + ".png)";                        
+            item.style.backgroundImage = "url(../imgs/" + list[i] + ".png)";
         }
 
         item.style.display = "block";
@@ -324,17 +323,24 @@ function hoverVeg(object, exit = 0) {
     print_list();
 }
 
-var fridgeDiv = document.getElementById("fridge"),
-    fridgeState = false; // false = hidden
+var fridgeDiv = document.getElementById("fridge")
 /**
- * fridge display button toggle
+ * fridge display open
  */
-function fridgeToggle() {
-    if (fridgeState) {
-        fridgeState = false;
-        fridgeDiv.style.display = "none";
-    } else {
-        fridgeState = true;
-        fridgeDiv.style.display = "block";
+function fridgeOpen() {
+    fridgeDiv.style.display = "block";
+}
+/**
+ * fridge display close
+ */
+function fridgeClose() {
+    fridgeDiv.style.display = "none";
+}
+/**
+ * fridge display close when clicking outside the window
+ */
+window.onclick = function (ev) {
+    if (ev.target == fridgeDiv) {
+        fridgeClose();
     }
 }
