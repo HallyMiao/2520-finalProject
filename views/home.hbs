@@ -6,10 +6,11 @@
     <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     <link href="../css/favStyles.css" rel="stylesheet" type="text/css"/>
     <link href="../css/fridge.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Swanky and Moo Moo' rel='stylesheet'>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         /**
          * Set the results taken from the server after the search and calls the function to show results on page
@@ -17,10 +18,13 @@
          */
         function setCurrentResults(res) {
             currentResults = res;
-            if (res[res.length - 1].currentUser) {
+            if (res && res.length > 0 && res[res.length - 1].currentUser) {
                 localStorage.setItem('currentUser', JSON.stringify(res[res.length - 1].currentUser));
             }
-
+            currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            document.getElementById('welcome-user-msg').innerHTML =
+                    `Welcome, ${currentUser}!`;
+            showSearchHistory();
             if (currentResults && currentResults.length > 1) {
                 showResults();
             }
@@ -48,73 +52,91 @@
     <div class="food-divs" id="search-ingredients-div">
         <div class="food-divs" id="cat-ingredients-div">
             <!-- buncha ingredients dropdown -->
+            <div id="searchBar">
+                <input type="text" id="ingredient-bar" name="q" placeholder="Enter ingredients">
+                <div id="food-list" style="display: none;">
+                    <b id="searchHist"> Search History </b>
+                    <button id="clearbutt" onclick="clearSearchHist()"> Clear</button>
+                </div>
+            </div>
             <div id='health-diet'>
-                <button class="collapsible"> HEALTH</button>
-                <div class="content">
-                    <form id='ingredient-form'>
-                        <label class="listcontainer">No Dairy
-                            <input type="checkbox" name="health" value='dairy-free'>
-                            <span class="checkmark"></span>
-                        </label>
+                <div class="container-fluid">
+                    <div class="row">
 
-                        <label class="listcontainer">No Peanuts
-                            <input type="checkbox" name="health" value='peanut-free'>
-                            <span class="checkmark"></span>
-                        </label>
+                        <div class="allbuttons col-xs-4 col-sm-4 col-lg-4">
 
-                        <label class="listcontainer">No Soy
-                            <input type="checkbox" name="health" value='soy-free'>
-                            <span class="checkmark"></span>
-                        </label>
+                            <button class="collapsible"> HEALTH</button>
+                            <div class="content">
+                                <form id='ingredient-form'>
+                                    <label class="listcontainer">No Dairy
+                                        <input type="checkbox" name="health" value='dairy-free'>
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                        <label class="listcontainer">No Pork
-                            <input type="checkbox" name="health" value='dairy-free'>
-                            <span class="checkmark"></span>
-                        </label>
-                    </form>
-                </div>
-                <button class="collapsible"> DIET</button>
-                <!-- <div id="enter-stuff"> -->
-                <div class="content">
-                    <form id='ingredient-form1'>
-                        <label class="listcontainer">Balanced
-                            <input type="checkbox" name="diet" value='balanced'>
-                            <span class="checkmark"></span>
-                        </label>
+                                    <label class="listcontainer">No Peanuts
+                                        <input type="checkbox" name="health" value='peanut-free'>
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                        <label class="listcontainer">High Fiber
-                            <input type="checkbox" name="diet" value='high-fiber'>
-                            <span class="checkmark"></span>
-                        </label>
+                                    <label class="listcontainer">No Soy
+                                        <input type="checkbox" name="health" value='soy-free'>
+                                        <span class="checkmark"></span>
+                                    </label>
 
-                        <label class="listcontainer" name="diet" value='high-protein'>High Protein
-                            <input type="checkbox" name="diet" value='high-protein'>
-                            <span class="checkmark"></span>
-                        </label>
+                                    <label class="listcontainer">No Pork
+                                        <input type="checkbox" name="health" value='dairy-free'>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </form>
+                            </div>
+                        </div>         
 
-                        <label class="listcontainer">Low Fat
-                            <input type="checkbox" name="diet" value='low-fat'>
-                            <span class="checkmark"></span>
-                        </label>
+                        <div class="allbuttons col-xs-4 col-sm-4 col-lg-4">
 
-                        <label class="listcontainer">Low Sodium
-                            <input type="checkbox" name="diet" value='low-sodium'>
-                            <span class="checkmark"></span>
-                        </label>
-                    </form>
-                </div>
-                <button class="collapsible"> EXCLUDE INGREDIENTS</button>
-                <div class="content">
-                    <input type="text" id="allergies-bar" name="excluded" placeholder="Enter restrictions">
-                </div>
-                <button class="collapsible"> SEARCH</button>
-                <div class="content">
-                    <input type="text" id="ingredient-bar" name="q" placeholder="Enter ingredients">
-                    <div id="food-list" style="display: none;">
-                        <b id="searchHist"> Search History </b>
-                        <button id="clearbutt" onclick="clearSearchHist()"> Clear</button>
+                            <button class="collapsible"> DIET</button>
+                            <!-- <div id="enter-stuff"> -->
+                            <div class="content">
+                                <form id='ingredient-form1'>
+                                    <label class="listcontainer">Balanced
+                                        <input type="checkbox" name="diet" value='balanced'>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="listcontainer">High Fiber
+                                        <input type="checkbox" name="diet" value='high-fiber'>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="listcontainer" name="diet" value='high-protein'>High Protein
+                                        <input type="checkbox" name="diet" value='high-protein'>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="listcontainer">Low Fat
+                                        <input type="checkbox" name="diet" value='low-fat'>
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="listcontainer">Low Sodium
+                                        <input type="checkbox" name="diet" value='low-sodium'>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </form>
+                            </div>
+                        </div>
+
+                        
+                        <div class="allbuttons col-xs-4 col-sm-4 col-lg-4">
+
+                            <button class="collapsible"> EXCLUDE INGREDIENTS</button>
+                            <div class="content">
+                                <input type="text" id="allergies-bar" name="excluded" placeholder="Enter restrictions">
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
 
                 <!-- Place holder for the final combination of all forms -->
                 <form id="final-form" method="get" action="/search">
@@ -122,29 +144,6 @@
                 </form>
                 <button id="submitbutt" onclick="submitForms()"> Submit</button>
 
-                <button class="collapsible" onclick="fridgeToggle()"> FRIDGE</button>
-
-                <div id="fridge">
-                    <div id="tempBox"></div>
-                    <input type="text" id="inputBox">
-                    <button id="default">Default</button>
-                    <button id="fridgeDelete">Delete</button>
-
-                    <div id="fridgeDisplay">
-                        <div id="fridgeBG">
-                            <div id="topDoor"></div>
-                            <div id="botDoor"></div>
-                            <div id="topClose"></div>
-                            <div id="botClose"></div>
-                        </div>
-                        <div id="freezer">
-
-                        </div>
-                        <div id="contents">
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -162,11 +161,20 @@
             popular cooking websites! <br><br>
             To get started, type your ingredients from the control panel on the left.
         </p>
+    </div> 
+    <div id="iconlinksdiv">
+        <div id="iconlinks">
+            <img id="fridgeicon" onclick="fridgeOpen()" src="../imgs/fridge4.png">
+            <img id="recipebookicon" src="../imgs/recipebook1.png">
+            <img id="searchicon" src="../imgs/searchicon1.png">
+        </div>
     </div>
+    
 </div>
 
+
 <div class="listcontainer">
-        <button type="button" data-toggle="modal" data-target="#favModal" id="favbutt">
+    <button type="button" data-toggle="modal" data-target="#favModal" id="favbutt">
         Favourites
     </button>
 
@@ -182,17 +190,75 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="closeFavButt" data-dismiss="modal">Close</button>
+                    <button type="button" class="modalButts" id="closeFavButt" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+<div id="fridge">
+    <div id="tempBox"></div>
+    <input type="text" id="inputBox">
+    <button id="default">Default</button>
+    <button id="fridgeDelete">Delete</button>
+    <button type="button" class="close" aria-label="Close" onclick="fridgeClose()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div id="fridgeDisplay">
+        <div id="fridgeBG">
+            <div id="topDoor"></div>
+            <div id="botDoor"></div>
+            <div id="topClose"></div>
+            <div id="botClose"></div>
+        </div>
+        <div id="freezer"></div>
+        <div id="contents"></div>
+    </div>
+</div>
+
+<div id="infoModal">
+    <div id="infoBox">
+        <button id="closeInfo" type="button" class="close" aria-label="Close" onclick="closeInfo()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div id="welcomeBox">
+            <div id="welcomeText">Welcome to Pusheen Nomnoms!</div>
+        </div>
+
+        <div id="textBox">
+            <div class="infoText">
+                Click on one of the three boxes to start looking up recipes!<br><br>
+                - The fridge will open a fridge with ingredients that you can select to include in your recipe.<br>
+                - The magnifying glass will open a sidebar where you can search specific recipes.<br>
+                - The menu will take you to a page with some of Pusheen's favorite recipes.<br>
+            </div>
+
+            <div class="infoText">
+                Patch 0.2<br>
+                - You can now delete saved recipes from your favorites!<br>
+                - Added styles for favorite recipes!<br>
+                - Added buttons to select a method to search for recipes!<br>
+                - The fridge is no longer in the control panel!<br>
+            </div>
+
+            <div class="infoText">
+                Patch 0.1<br>
+                - Added a fridge<br>
+                - Added a favorites page<br>
+                - Added some other stuff<br>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="../js/favourites.js"></script>
 <script src="../js/displays.js"></script>
+<script src="../js/fridge2.js"></script>
 <script src="../js/fridge.js"></script>
 <script src="../js/utils.js"></script>
+<script> setFavouriteRecipes("{{favRecipes}}")</script>
 </body>
 </html>

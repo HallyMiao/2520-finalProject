@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const utils = require('../middlewares/loginUtils');
+const favUtils = require('../middlewares/favUtils');
 
 router.get('/', function (req, res, next) {
     res.render('login.hbs')
@@ -20,11 +21,6 @@ router.post('/registerchef', (request, response) => {
             status: 0
         });
     }
-    else if (valid === false) {
-        response.render('login.hbs', {
-            status: 1
-        });
-    }
     else if (noRepeat === false) {
         response.render('login.hbs', {
             status: 2
@@ -41,12 +37,16 @@ router.post('/getpass', (request, response) => {
 
     var authenticationResult = utils.authenticateChef(inpUsername, inpPassword);
     if (authenticationResult === 'authentication failure') {
-        response.redirect('/')
+        response.render('login.hbs', {
+            status: 1
+        });
     } else if (authenticationResult === 'logged in') {
+        favRecipes = JSON.stringify(favUtils.getFavRecipesForUser(inpUsername));
         response.render('home.hbs', {
             resultRecipes: JSON.stringify([{
                 currentUser: inpUsername
-            }])
+            }]),
+            favRecipes: favRecipes
         })
     } else if (authenticationResult === 'no username') {
         response.render('login.hbs', {
